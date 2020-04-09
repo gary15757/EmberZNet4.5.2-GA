@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<callback>
+
+  <!-- SOC handlers -->
+  <function id="POLL_COMPLETE" 
+            name="emberPollCompleteHandler" 
+            returnType="void" 
+            stackMacro="EMBER_APPLICATION_HAS_POLL_COMPLETE_HANDLER" 
+            consumed="true" 
+            platformType="soc">
+    <description>
+This is called by the stack when a data poll to the parent is complete. See stack documentation for more information.
+
+Application framework itself defines this callback and calls function emberAfPollCompleteHandler(). If you wish to 
+add functionality to this handler, while still maintaining app framework functionality, then implement it yourself and make
+sure you call emberAfPollCompleteHandler() function within your implementation of emberPollCompleteHandler().
+
+    </description>
+    <arg name="status" 
+         type="EmberStatus" 
+         description="Ember status value." />
+    <codeForStub>
+    emberAfPollCompleteHandler(status);
+    </codeForStub>
+  </function>
+
+  <function id="MAC_PASSTHROUGH" name="emberMacPassthroughMessageHandler" returnType="void" stackMacro="EMBER_APPLICATION_HAS_MAC_PASSTHROUGH_HANDLER" consumed="false" platformType="soc">
+    <description>
+      This is called by stack when an interpan message is received.
+    </description>
+    <arg name="messageType" 
+         type="EmberMacPassthroughType" 
+         description="The type of interpan message being received"/>
+    <arg name="message" 
+         type="EmberMessageBuffer" 
+         description="The interpan message"/>
+    <codeForStub/>
+  </function>
+
+  <function id="MAC_FILTER_MATCH_MESSAGE" name="emberMacFilterMatchMessageHandler" returnType="void" stackMacro="EMBER_APPLICATION_HAS_MAC_FILTER_MATCH_MESSAGE_HANDLER" consumed="false" platformType="soc">
+    <description>
+      This function is called when the stack has received a raw MAC message that has matched one of the application's configured MAC filters.
+    </description>
+    <arg name="macFilterMatchStruct" type="const EmberMacFilterMatchStruct *" description="This is a pointer to a structure containing information about the matching message, including the index of the filter that was matched, and the actual data of the message." />
+    <codeForStub />
+  </function>
+
+  <function id="POLL" name="emberPollHandler" returnType="void" stackMacro="EMBER_APPLICATION_HAS_POLL_HANDLER" consumed="false" platformType="soc">
+    <description>
+      This is called by stack when poll is initiated. See stack documentation for more information.
+    </description>
+    <arg name="childId" 
+         type="EmberNodeId" 
+         description="The ID of the child that is requesting data"/>
+    <arg name="transmitExpected" 
+         type="boolean" 
+         description="TRUE if the child is expecting an application supplied data message"/>
+    <codeForStub/>
+  </function>
+
+  <function id="ZIGBEE_KEY_ESTABLISHMENT" name="emberZigbeeKeyEstablishmentHandler" returnType="void" stackMacro="EMBER_APPLICATION_HAS_ZIGBEE_KEY_ESTABLISHMENT_HANDLER" consumed="false" platformType="soc">
+    <description>
+      This is called by stack to notify it of the status of the request for a Link Key.  See stack documentation for more information.
+    </description>
+    <arg name="partner" type="EmberEUI64"     description="The IEEE address of the partner device.  Or all zeros if the Key establishment failed." />
+    <arg name="status"  type="EmberKeyStatus" description="The status of the key establishment." />
+    <codeForStub />
+  </function>
+
+
+  <!-- Ezsp handlers -->
+  <function id="EZSP_POLL_COMPLETE" 
+            name="ezspPollCompleteHandler" 
+            returnType="void" 
+            stackMacro="EZSP_APPLICATION_HAS_POLL_COMPLETE_HANDLER" 
+            consumed="true" 
+            platformType="host">
+    <description>
+This is called by the EZSP when a data poll to the parent is complete. See EZSP documentation for more information.
+
+Application framework itself defines this callback and calls function emberAfEzspPollCompleteHandler(). If you wish to 
+add functionality to this handler, while still maintaining app framework functionality, then implement it yourself and make
+sure you call emberAfEzspPollCompleteHandler() function within your implementation of ezspPollCompleteHandler().
+    </description>
+    <arg name="status" 
+         type="EmberStatus" 
+         description="Ember status value." />
+    <codeForStub>
+    emberAfEzspPollCompleteHandler(status);
+    </codeForStub>
+  </function>
+
+  <function id="EZSP_POLL" 
+            name="ezspPollHandler" 
+            returnType="void" 
+            stackMacro="EZSP_APPLICATION_HAS_POLL_HANDLER" 
+            consumed="false" 
+            platformType="host">
+    <description>
+      This is called by EZSP when poll is initiated. See EZSP documentation for more information.
+    </description>
+    <arg name="childId" 
+         type="EmberNodeId" 
+         description="The ID of the child that is requesting data"/>
+    <codeForStub/>
+  </function>
+  <function id="EZSP_TIMER" 
+            name="ezspTimerHandler" 
+            returnType="void" 
+            stackMacro="EZSP_APPLICATION_HAS_TIMER_HANDLER" 
+            consumed="false" 
+            platformType="host">
+    <description>
+      A callback from the timer.
+    </description>
+    <arg name="timerId" 
+         type="int8u" 
+         description="Which timer generated the callback (0 or 1)"/>
+  </function>
+
+  <function id="MAC_PASSTHROUGH" name="ezspMacPassthroughMessageHandler" returnType="void" stackMacro="EZSP_APPLICATION_HAS_MAC_PASSTHROUGH_HANDLER" consumed="false" platformType="host">
+    <description>
+      This is called by stack when an interpan message is received.
+    </description>
+    <arg name="messageType" 
+         type="EmberMacPassthroughType" 
+         description="The type of interpan message being received"/>
+    <arg name="lastHopLqi" 
+         type="int8u" 
+         description="The link quality indicator of the last hop"/>
+    <arg name="lastHopRssi" 
+         type="int8s" 
+         description="The received signal strength of the last hop"/>
+    <arg name="messageLength" 
+         type="int8u" 
+         description="The length of the incoming interpan message"/>
+    <arg name="messageContents" 
+         type="int8u *" 
+         description="A pointer to the incoming interpan message"/>
+    <codeForStub/>
+  </function>
+
+
+  <function id="EZSP_ZIGBEE_KEY_ESTABLISHMENT" name="ezspZigbeeKeyEstablishmentHandler" returnType="void" stackMacro="EZSP_APPLICATION_HAS_ZIGBEE_KEY_ESTABLISHMENT_HANDLER" consumed="false" platformType="host">
+    <description>
+      This is called by stack to notify it of the status of the request for a Link Key.  See stack documentation for more information.
+    </description>
+    <arg name="partner" type="EmberEUI64"     description="The IEEE address of the partner device.  Or all zeros if the Key establishment failed." />
+    <arg name="status"  type="EmberKeyStatus" description="The status of the key establishment." />
+    <codeForStub />
+  </function>
+
+</callback>

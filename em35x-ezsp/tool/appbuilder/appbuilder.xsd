@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="configurator">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="domain"/>
+        <xs:element ref="bitmap"/>
+        <xs:element ref="callback"/>
+        <xs:element ref="cluster"/>
+        <xs:element ref="clusterExtension"/>
+        <xs:element ref="deviceType"/>
+        <xs:element ref="enum"/>
+        <xs:element ref="global"/>
+        <xs:element ref="struct"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="bitmap">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="field"/>
+      </xs:sequence>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="field">
+    <xs:complexType>
+      <xs:attribute name="mask" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="name" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="callback">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="function"/>
+      </xs:sequence>
+      <xs:attribute name="postfix" type="xs:NCName"/>
+      <xs:attribute name="prefix" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="function">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="description"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="arg"/>
+        <xs:element minOccurs="0" ref="codeForStub"/>
+      </xs:sequence>
+      <xs:attribute name="category" type="xs:NCName"/>
+      <xs:attribute name="cluster"/>
+      <xs:attribute name="consumed" type="xs:boolean"/>
+      <xs:attribute name="description"/>
+      <xs:attribute name="id" use="required" type="xs:NCName"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="platformType" type="xs:NCName"/>
+      <xs:attribute name="returnType" use="required" type="xs:NCName"/>
+      <xs:attribute name="side" type="xs:NCName"/>
+      <xs:attribute name="stackMacro"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="codeForStub" type="xs:string"/>
+  <xs:element name="cluster">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element ref="domain"/>
+        <xs:element ref="description"/>
+        <xs:element ref="code"/>
+        <xs:element ref="define"/>
+        <xs:element ref="client"/>
+        <xs:element ref="server"/>
+        <xs:element minOccurs="0" ref="generateCmdHandlers"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="attribute"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="command"/>
+      </xs:sequence>
+      <xs:attribute name="manufacturerCode" type="xs:NMTOKEN"/>
+      <xs:attribute name="singleton" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="code" type="xs:NMTOKEN"/>
+  <xs:element name="define" type="xs:NCName"/>
+  <xs:element name="client">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:boolean">
+          <xs:attribute name="init" use="required" type="xs:boolean"/>
+          <xs:attribute name="tick" use="required" type="xs:boolean"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="server">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:boolean">
+          <xs:attribute name="init" use="required" type="xs:boolean"/>
+          <xs:attribute name="tick" use="required" type="xs:boolean"/>
+          <xs:attribute name="tickFrequency" type="xs:NCName"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="generateCmdHandlers" type="xs:boolean"/>
+  <xs:element name="clusterExtension">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="attribute"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="command"/>
+      </xs:sequence>
+      <xs:attribute name="code" use="required" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="deviceType">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element ref="domain"/>
+        <xs:element ref="typeName"/>
+        <xs:element ref="zigbeeType"/>
+        <xs:element ref="profileId"/>
+        <xs:element ref="deviceId"/>
+        <xs:element ref="channels"/>
+        <xs:element ref="clusters"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="typeName" type="xs:string"/>
+  <xs:element name="zigbeeType">
+    <xs:complexType mixed="true">
+      <xs:attribute name="editable" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="profileId">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:NMTOKEN">
+          <xs:attribute name="editable" use="required" type="xs:boolean"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="deviceId">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:NMTOKEN">
+          <xs:attribute name="editable" use="required" type="xs:boolean"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="channels">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="channel"/>
+      </xs:sequence>
+      <xs:attribute name="editable" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="channel" type="xs:integer"/>
+  <xs:element name="clusters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="include"/>
+      </xs:sequence>
+      <xs:attribute name="lockOthers" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="include">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="requireAttribute"/>
+        <xs:element ref="requireCommand"/>
+      </xs:choice>
+      <xs:attribute name="client" use="required" type="xs:boolean"/>
+      <xs:attribute name="clientLocked" use="required" type="xs:boolean"/>
+      <xs:attribute name="cluster"/>
+      <xs:attribute name="server" use="required" type="xs:boolean"/>
+      <xs:attribute name="serverLocked" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="requireAttribute" type="xs:NCName"/>
+  <xs:element name="requireCommand" type="xs:NCName"/>
+  <xs:element name="enum">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="item"/>
+      </xs:sequence>
+      <xs:attribute name="description"/>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="global">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="command"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="struct">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="item"/>
+      </xs:sequence>
+      <xs:attribute name="length" type="xs:integer"/>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="name" type="xs:string"/>
+  <xs:element name="domain">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="older"/>
+      </xs:sequence>
+      <xs:attribute name="name"/>
+      <xs:attribute name="spec"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="older">
+    <xs:complexType>
+      <xs:attribute name="spec" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="item">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="type" type="xs:NCName"/>
+      <xs:attribute name="value" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="attribute">
+    <xs:complexType mixed="true">
+      <xs:attribute name="code" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="default"/>
+      <xs:attribute name="define" use="required" type="xs:NCName"/>
+      <xs:attribute name="length" type="xs:integer"/>
+      <xs:attribute name="manufacturerCode" type="xs:NMTOKEN"/>
+      <xs:attribute name="max" type="xs:NMTOKEN"/>
+      <xs:attribute name="min" type="xs:NMTOKEN"/>
+      <xs:attribute name="optional" use="required" type="xs:boolean"/>
+      <xs:attribute name="side" use="required" type="xs:NCName"/>
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+      <xs:attribute name="writable" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="command">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="description"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="arg"/>
+      </xs:sequence>
+      <xs:attribute name="code" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="introducedIn"/>
+      <xs:attribute name="manufacturerCode" type="xs:NMTOKEN"/>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+      <xs:attribute name="noDefaultImplementation" type="xs:boolean"/>
+      <xs:attribute name="optional" type="xs:boolean"/>
+      <xs:attribute name="source" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="description">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="arg"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="arg">
+    <xs:complexType>
+      <xs:attribute name="array" type="xs:boolean"/>
+      <xs:attribute name="default" type="xs:NMTOKEN"/>
+      <xs:attribute name="description"/>
+      <xs:attribute name="descritpion"/>
+      <xs:attribute name="introducedIn"/>
+      <xs:attribute name="length" type="xs:integer"/>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+      <xs:attribute name="removedIn"/>
+      <xs:attribute name="type" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

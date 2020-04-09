@@ -1,0 +1,577 @@
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>
+<html lang="en">
+<head>
+<title>ReleaseNotes_EM35X-EZSP_Z4.5.2_GA</title>
+</head>
+<body>
+<h1>Release Notes</h1>
+<br />
+Product: EM35X-EZSP Development Kit, EmberZNet PRO 4.5.2 GA
+<br />
+Release date: June 27, 2011
+<h2>1 Overview</h2>
+This release contains the GA of EmberZNet 4.5.2
+of EZSP images for EM351 and EM357 chips.
+<br />
+It contains the following:
+<br />
+<ul>
+<li>
+<b>New in 4.5.2: </b>
+Support for maximum of 64 end devices (children) on a router (previously was 32).
+<li>
+<b>New in 4.5.2: </b>
+Important SE 1.1 certification bug fixes.
+<li>A sample Hardware Abstraction Layer (HAL) to support STM32F103RET Host </li>
+microprocessor
+<li>Sample Applications provided as source code. Including SE (Smart Energy), HA (Home Automation), </li>
+<br />
+Bootloader, Manufacturing Library, ZDO Example, and Sensor/Sink
+<li>ISA3 Programming utilities required for the EM35X NCPs</li>
+<li>InSight Desktop software and InSight Adapter 3 (ISA3) hardware for network debugging</li>
+<li>InSight AppBuilder Version 2 software for rapid ZigBee Application Development</li>
+<li>Serial-uart-bootloader image (s37 file) for UART NCP</li>
+<li>Ezsp-spi-bootloader image (s37 file) for SPI NCP</li>
+<li>Full set of Documentation including API guides and Application Notes</li>
+</ul>
+<br />
+<b>1.1 What has changed in EmberZNet 4.5.2:</b>
+<br />
+<ul>
+N/A
+</ul>
+<br />
+<b>1.2 Installation:</b>
+<br />
+<br />
+Refer to the Quick Start Guide included in your Development Kit for detailed step-by-step
+<br />
+instructions about initially setting up your kit. See section 2 - Installation of these release notes
+<br />
+for detailed instructions on installation.
+<br />
+<br />
+<b>1.3 Support:</b>
+<br />
+<br />
+Development Kit customers are eligible for training and technical support. You can use the
+<br />
+Ember web site
+<a href="http://www.ember.com" target="_blank">http://www.ember.com</a>
+ to obtain information about all Ember products and
+<br />
+services, and to sign up for product support.
+<br />
+<br />
+You can contact Ember technical support at
+<a href="http://portal.ember.com" target="_blank">http://portal.ember.com</a>
+<br />
+<br />
+<b>1.4 Software Version:</b>
+<br />
+<ul>
+<li>
+<i>Stack Software: </i>
+version 4.5 build a8.
+The version number can be found in build/version.txt.
+<br />
+<br />
+This stack software release is intended to be used with the following versions of other
+<br />
+components: 
+<ul>
+<li>
+<i>InSight Desktop: </i>
+2.1.96 or later
+<br />
+<li>
+<i>ISA3 Utilities: </i>
+1.2.0 (1.2 build 02)
+<br />
+<li>
+<i>IAR Embedded Workbench for ARM: </i>
+5.40.5
+<li>
+<i>ECC Library Version 1.0.1.20: </i>
+Smart Energy customers using NCP images with ECC 
+<br />
+must contact Ember to obtain such NCP (ECC) images
+<br />
+</ul>
+</ul>
+<br />
+<b>1.5 Accessing Documentation:</b>
+<br />
+<br />
+<b>To view the full set of documentation, click on:</b>
+<br />
+<br />
+Start&#151;&gt;All Programs&#151;&gt;Ember&#151;&gt;Ember Stack 4.5.2&#151;&gt;EM35X-EZSP&#151;&gt;Documentation
+<br />
+<br />
+Or open the &quot;documentation/index.htm&quot; file from the root directory of the installed
+<br />
+Ember stack. The documentation includes HTML pages describing the Ember Stack API and the
+<br />
+Ember HAL API, along with a Development Kit Users Guide, an Application Developers
+<br />
+Guide, the chip data sheet, and various Application Notes.
+<br />
+<br />
+<b>To view information on the sample applications, click on:</b>
+<br />
+<br />
+Start&#151;&gt;All Programs&#151;&gt;Ember&#151;&gt;Ember Stack 4.5.2&#151;&gt;EM35X-EZSP&#151;&gt;Samples
+<br />
+<br />
+Or open the &quot;app/sampleApps.html&quot; file from the root directory of the installed Ember
+<br />
+stack. This includes explanations of how the sample applications work, what commands are
+<br />
+supported, notes, and limitations. It also includes shortcut links to open the project files.
+<br />
+IAR Embedded Workbench for ARM must be installed before these project links
+<br />
+will work properly.
+<br />
+<br />
+<b>To view information on the ISA3 and associated utilities, click on:</b>
+<br />
+<br />
+Start&#151;&gt;All Programs&#151;&gt;Ember&#151;&gt;ISA3 Utilities&#151;&gt;Documentation
+<br />
+<br />
+Or open the &quot;docs/index.html&quot; file from the root directory of the installed ISA3 Utilities.
+<br />
+This includes explanations of how to use the ISA3 Command line utilities, how to program
+<br />
+certificates and install codes, as well as general documentation about the operation and use of the
+<br />
+ISA3.
+<br />
+<br />
+<b>To view documentation for IAR Embedded Workbench, click on:</b>
+<br />
+<br />
+Start&#151;&gt;All Programs&#151;&gt;IAR Systems&#151;&gt;IAR Embedded Workbench for ARM &#151;&gt;Release Notes
+<br />
+<br />
+<br />
+<b>1.6 The File Layout:</b>
+<br />
+<br />
+When the Ember stack software is installed, the following directories are present:
+<ul>
+<li>
+<b>app: </b>
+contains sample application utilities and source code.
+ It also contains IAR workbench workspace files 
+<br />
+(.eww and .ewp) for the STM32F103RET.  Makefiles are also provided to build sample applications for
+<br />
+PC/Linux hosts.
+<ul>
+<li>
+<b>app/framework: </b>
+contains source files for Application Framework Version 2. 
+<br />
+This code is configured using the AppBuilder GUI Tool to build applications that 
+<br />
+implement ZigBee application profiles such as ZigBee Smart Energy (SE) and Home Automation (HA) 
+<br />
+profiles. This directory also contains sample InSight Configurator (isc) files to build 
+<br />
+some of the HA and SE devices.
+<li>
+<b>app/nodetest:</b>
+contains pre-built images of the nodetest image. 
+The images are in EBL file 
+<br />
+format which requires installation of bootloader in order to run
+<li>
+<b>app/ezsp-uart-host: </b>
+contains uart-test applications.
+<li>
+<b>app/util: </b>
+contains useful utility libraries for application development. 
+<li>
+</ul>
+<li>
+<b>hal: </b>
+contains the HAL source code. 
+<li>
+<b>stack: </b>
+contains header files necessary to build EmberZNet applications. 
+<li>
+<b>build: </b>
+contains pre-build images for NCP and STM32F103RET host.  When applications 
+<br />
+are built, their folders will also end up in this directory.
+<ul>
+<li>
+<b>build/ em35x-ezsp-images:</b>
+contains pre-built NCP images with no ECC 
+<br />
+support for both EM357 and EM351 for both SPI and UART.
+<li>
+<b>build/ host-stm32-images:</b>
+contains pre-built images for sensor/sink and 
+<br />
+nodetest applications for STM32F103RET.
+</ul>
+<li>
+<b>documentation: </b>
+contains documentation files. Open 
+<br />
+&quot;documentation/index.htm&quot; to see a list of all documentation files. 
+<li>
+<b>tool: </b>
+contains the AppBuilder configuration settings, bootloader images and project 
+<br />
+files and bootloader Java application. 
+<ul>
+<li>
+<b>tool/appbuilder: </b>
+contains project templates, xml files and properties files 
+<br />
+for Application Builder tool.
+<li>
+<b>tool/image-builder: </b>
+contains image-builder upgrade file used by ZigBee OTA Bootload cluster.
+<br />
+<li>
+<b>tool/bootloader-em357 or tool/bootloader-em351: </b>
+contains bootloader images 
+<br />
+(s37 files) for both UART and SPI NCPs.
+</ul>
+</ul>
+<br />
+<b>1.7 Selecting a Stack for AppBuilder:</b>
+<br />
+<br />
+When using AppBuilder to generate projects it is important to select an installed stack to build 
+<br />
+those projects against. AppBuilder uses information contained in the installed stack (from 
+<br />
+tool/appbuilder) to expose features that are supported by that particular stack. To add a stack for 
+<br />
+AppBuilder to use: 
+<ol>
+<li>Select File&#151;&gt;Preferences </li>
+<li>select AppBuilder from the left side of the dialog box that appears </li>
+<li>click on the &quot;Add&quot; button </li>
+<li>navigate to the directory that your stack is installed in (default is C:/Program </li>
+Files/Ember/EmberZNet4.5.2-GA/EM35X-EZSP ) and click Ok 
+</ol>
+When creating a new AppBuilder project, a dialog box appears asking the user to select a stack 
+<br />
+to use for this project. To change the stack version use the drop down box just above the 
+<br />
+&quot;Add Stack Version&quot; button on the AppBuilder Preferences window. When creating a new configuration 
+<br />
+(using File&#151;&gt;New&#151;&gt;ZigBee Application Configuration) the stack that is being used for this configuration 
+<br />
+is listed in the upper left corner. The stack version must be changed prior to starting a configuration, open 
+<br />
+configurations are not changed to a new stack version if the stack version is changed.
+<br />
+<h2>2 Installation</h2>
+Refer to the Quick Start Guide included in your Development Kit for detailed step-by-step 
+<br />
+instructions about initially setting up your kit. 
+<br />
+<br />
+The release is made up of several components that work together to provide complete functionality.
+<br />
+With the exception of IAR Embedded Workbench, the most recent versions of all 
+<br />
+of these installers can be downloaded from the Ember Developer Portal at: 
+<br />
+<br />
+<a href="http://portal.ember.com/em35x" target="_blankF">http://portal.ember.com/em35x</a>
+<br />
+<br />
+<b>2.1 Install InSight Desktop:</b>
+<br />
+<br />
+InSight Desktop can be installed by running the installer. The Quick Start Guide included in your 
+<br />
+Development Kit provides details about installing InSight Desktop for the first time and running 
+<br />
+the First-Time Setup Wizard.  Note: Only the latest InSight Desktop (version mentioned in 
+<br />
+section 1.4) or later version can be used with this stack version.
+<br />
+<br />
+<b>2.2 Install the Ember stack:</b>
+<br />
+<br />
+The Ember Stack installer should be installed first, and performs the following actions:
+<ul>
+<li>
+Installs the files needed to develop applications on the Ember Stack into a directory 
+<br />
+specified by the user (The default location is C:/Program Files/Ember/EmberZNet4.5.2-GA/EM35X-EZSP).
+<li>
+Adds a shortcut to the Start Menu into the folder specified by the user (default 
+<br />
+directory is Ember/EmberZNet4.5.2-GA/EM35X-EZSP).
+<li>
+Adds an entry to &quot;add/remove programs&quot; (accessed from Windows Control Panel) so 
+<br />
+the stack can be uninstalled 
+<li>
+This does not affect any environment variables 
+</ul>
+This release should be installed in a different directory from prior installations. It is possible for 
+<br />
+multiple installations to exist together
+<br />
+<br />
+<b>2.3 Install IAR Embedded Workbench for ARM:</b>
+<br />
+<ul>
+<li>A CD including IAR Embedded Workbench for ARM is included with your </li>
+Development Kit.  Depending on the type of Development Kit purchased, this may be a 
+<br />
+30-day evaluation CD, or a fully licensed copy of EWARM-256. 
+<li>Insert the CD into your CD Drive and follow the instructions on the installer that should </li>
+automatically appear.  If the Installer does not automatically start, browse to your CD 
+<br />
+Drive, and click on autorun.exe. 
+<li>Refer to the &quot;QuickStart Installation Information&quot; section of the IAR installer for </li>
+additional information about the installation process and how to configure your license.
+</ul>
+<b>2.4 Install The ISA3 Utilities:</b>
+<br />
+<br />
+The installer will perform the following actions: 
+<ul>
+<li>Installs the Ember InSight Adapter drivers so that the InSight Adapter can be used both </li>
+over USB and Ethernet 
+<li>Installs the following command line utilities: </li>
+<ul>
+<li>em3xx_buildimage.exe </li>
+<li>em3xx_load.exe </li>
+<li>em3xx_isa.exe </li>
+<li>em3xx_convert.exe </li>
+<li>stm32_load.exe</li>
+</ul>
+<li>Adds an entry to &quot;add/remove programs&quot; (accessed from Windows Control Panel) so that </li>
+the utilities can be uninstalled. 
+<li>Modifies your PATH environment variable so that the command line utilities can be </li>
+easily executed from a Windows Command Prompt.
+</ul>
+<b>Note: The ISA3 Utilities installer should always be run after all previous installers, </b>
+<br />
+<b>including after IAR Embedded Workbench for ARM.</b>
+<br />
+<br />
+<b>2.5 Install FTDI USB Drivers:</b>
+<br />
+In order to use the USB interface of the breakout board for UART connectivity, drivers for the 
+<br />
+FTDI USB&lt;&#151;&gt;Serial converter must be installed.  This driver can be acquired from FTDI: 
+<br />
+<br />
+<a href="http://www.ftdichip.com/Drivers/VCP.htm" target="_blank">http://www.ftdichip.com/Drivers/VCP.htm</a>
+<br />
+<br />
+These drivers are not required if you connect to the UART of the breakout board using the RS- 
+<br />
+232 port or via the pass-through UART functionality of the InSight Adapter.
+<br />
+<br />
+<h2>3 Issues Fixed in 4.5.2</h2>
+<b>3.1 Common Stack/HAL/Documentation Issues Fixed:</b>
+<br />
+<ul>
+N/A
+</ul>
+<ul>
+N/A
+</ul>
+<br />
+<h2>4 Known Issues in 4.5.2</h2>
+<b>4.1 Common Stack/HAL/Installer/Documentation Known Issues:</b>
+<br />
+<ul>
+<li>Case 10809: Need a message tag (or something similar) to relate rawTransmitCompleteHandler </li>
+back to instance of sendRawMessage
+<li>Case 11362: Persistent security state after join failure can cause spurious failures in </li>
+subsequent join attempts. 
+<li>Case 11464: Corrupt / incorrect response data in ZDO Binding Table Response. </li>
+<li>Case 11694: Indirect Transaction Expiry route error not being sent in some situations. </li>
+<li>Case 11939: MTORR reception by concentrator neighbor sometimes causes assert in </li>
+emHandleRouteCommand. 
+<li>Case 12148: Nodetest: Frequency Shift after Shutdown Issue. </li>
+<li>Case 12430: MfglibSendPacket with short packet length not reliably received by mfglibRxHander</li>
+<li>Case 12585: Inconsistency between Zigbee Pro stack vendors implementation whether </li>
+the update device message should be APS encrypted or not
+<li>Case 12841: Installer currently installs all files with Administrator privilege on Windows 7 </li>
+platform.  User needs to also have Administrator privilege in order to manipulate the files.
+<li>Case 12907: Transport Key for non-global TC Link Key should use APS security</li>
+<li>Case 12947: Sleepy broadcast payload is sometimes corrupted when relaying to child </li>
+<li>Case 12995: Extra retries seen on ZDO requests; ZDO response going out before APS ACK</li>
+<li>Case 13179: Under &quot;Format of the installation code file&quot; section (page 22), </li>
+the description tells the reader to include the device's EUI in the install code file, 
+<br />
+but the subsequent example fails to include it.
+<li>Not all of the output from commands in the nodetest application has been fully updated to </li>
+use our easily parse-able response formatting.  These commands may have their output 
+<br />
+changed in future releases. 
+</ul>
+<b>4.2 EM35X NCP Platform Specific Stack/HAL/Documentation Known Issues:</b>
+<br />
+<ul>
+<li>Case 8068: EZSP UART images do not support sleep.</li>
+<li>Case 10319: The ADC functionality included as part of the HAL is a port of the driver </li>
+from the 2xx.  This driver should be considered preliminary, as it does not provide 
+<br />
+functionality for all aspects of the EM300 series ADC's hardware features.  This driver is 
+<br />
+also implemented assuming that the EmberZNet Stack will share the ADC with the 
+<br />
+application.  This is no longer true, as the application has full control of the general 
+<br />
+purpose ADC on the EM35x.  Future releases may include changes to the ADC driver to 
+<br />
+expose the additional new features, and remove the sharing. 
+<br />
+The halAdcSetRange() function within the HAL should not be used.  Only the default, 
+<br />
+low voltage range of the ADC should be used.  See the EM35x Errata for detail
+<li>Case 10809: Need a message tag (or something similar) to relate </li>
+rawTransmitCompleteHandler back to instance of sendRawMessage.
+<li>Case 11384: When source routing with NCP solution, routing issue can be observed </li>
+when sending multihop zdo responses
+<li>Case 11831 Mfglib rx callback should print rssi and lqi as decimal</li>
+<li>Case 12512: STM32F host does not attain optimal deep sleep current</li>
+<li>Case 13222: UNIX Host framework should call gatewayWaitForEvents and provide </li>
+interface to extend descriptor list
+STM32F103RET host is capable of performing a sleep cycle as expected and is 
+<br />
+functional form the applications perspective, it does not yet attain the lowest current it 
+<br />
+could.  The HAL requires improvements to properly implement shutdown and startup functions.
+<li>em3xx_load may not properly leave the chip in a state where deep sleep can be fully </li>
+achieved.  If testing deep sleep, power-cycle the chip after loading a new image.
+<li>ARM has recently published the ARM Cortex Microcontroller Software Interface </li>
+Standard (CMSIS).  Ember is currently evaluating the CMSIS for use in future releases. 
+<br />
+Therefore, it is possible the register definitions, exception and interrupt definitions, and 
+<br />
+other HAL APIs and source code may change in future releases to offer compatibility 
+<br />
+with the CMSIS Standard.
+<li>ARM's TPIU TracePort functionality is not gracefully shutdown when entering deep </li>
+sleep.  This could cause some garbage to be seen in debug channel output of sleepy 
+<br />
+devices.
+</ul>
+<b>4.3 InSight Adapter (ISA3):</b>
+<br />
+<ul>
+<li>Case 10343: When capturing a large amount of traffic, the capture should be done to a </li>
+file (using &quot;Start Capture with Options&quot;) instead of being displayed live. Live captures 
+<br />
+can lose packet information if the traffic is high.  
+<li>Case 10359: The actual speed of the SerialWire and JTAG interfaces may not always </li>
+reach the configured speed. 
+<li>Case 11119: (Only applies to ISA3s shipped prior to January 2010 with bootloader </li>
+v1.0b2 and firmware v1.0b2 and prior) The InSight Adapter may fail to reboot after a 
+<br />
+firmware update, sometimes generating an error similar to one of the following. If this 
+<br />
+happens, power the InSight Adapter off and back on. Then run em3xx_isa.exe again to 
+<br />
+check that the update was successful.  Example errors:
+<ul>
+<li>ERROR: IP communication error. Connection closed ! </li>
+<li>ERROR: Can not connect to J-Link via TCP/IP</li>
+<li>ERROR: InSight Adapter could not update firmware </li>
+<li>ERROR: Supply voltage too high </li>
+<li>Error: EMU_GetFirmwareString </li>
+</ul>
+<li>Case 11588: ISA3 needs to synchronize packet stream and debug (EZSP) stream, </li>
+otherwise, EZSP trace can be displayed out of synced in ISD. 
+<li>The Ember ISA2 used with the EM250 and EM260 is not compatible with EM300 Series chips. </li>
+<li>Only the Ember ISA3 is supported for use with EM300 Series chips and InSight Desktop, </li>
+IAR EWARM, and other ISA3 Utilities such as em3xx_load.  Other third party 
+<br />
+SerialWire or JTAG debuggers are not currently supported. 
+<li>SerialWire, JTAG and the admin interface are supported over both USB and Ethernet </li>
+connections.  However, the following functionality is not supported over USB, only over 
+<br />
+Ethernet: 
+<ul>
+<li>UART pass-through on port 4901. </li>
+<li>Packet trace and debug channel on port 4905. </li>
+<li>InSight Desktop discovery on port 4920. </li>
+<li>Virtual UART on port 4900. </li>
+<li>Time synchronization </li>
+</ul>
+<li>The following functionality is not yet supported: </li>
+<ul>
+<li>Data Emulation Interface (DEI) connections other than UART pass-through.</li>
+</ul>
+<li>If using USB, only one InSight Adapter may be connected to a PC at a time.</li>
+</ul>
+<b>4.4 IAR Embedded Workbench for ARM:</b>
+<br />
+<ul>
+<li>Case 11022: When starting a debug session, IAR may incorrectly display a warning about </li>
+the stack &quot;CSTACK&quot; being filled to one hundred percent while the threshold is set to 90%. 
+<li>Case 12577: An IAR optimization error may result in a NULL pointer access in very rare </li>
+cases where a pointer that may sometimes be NULL is passed to a function that then 
+<br />
+verifies the pointer is not NULL before accessing it. 
+<li>IAR Workbench does not yet contain support for directly downloading images to flash on </li>
+the EM357 or EM351.  Currently, em3xx_load or InSight Desktop must be used for all 
+<br />
+flash programming. 
+<li>The IAR linker displays usage statistics about the amount of different types of memory </li>
+that are used.  The ram usage statistics (readwrite data memory) incorrectly count the 
+<br />
+Simulated eeprom as ram.  Please instead refer to the output generated by em3xx_convert 
+<br />
+which provides a more complete breakdown of usage.
+<br />
+<br />
+While the linker prints to stdout basic information regarding code and data usage, this 
+<br />
+information can be confusing and misleading. em3xx_convert, which is triggered by the 
+<br />
+IAR project files as a post build step , prints to stdout more detailed information of RAM 
+<br />
+usage, flash usage, and a  usage summary.   
+<li>Errors and memory usage information generated by em3xx_convert may not be visible in </li>
+the build output window of IAR Workbench.  To view these errors, select options from 
+<br />
+the tools menu, then select the Messages category.  Under the Show build messages 
+<br />
+option, select all. 
+</ul>
+See the IAR EWARM release notes for additional information.
+<br />
+<br />
+<b>4.5 EM357 and EM351:</b>
+<br />
+<br />
+See the EM35x Errata documentation included with the stack documentation for more 
+<br />
+information.
+<br />
+<h2>5 InSight Desktop/Application Framework/Sample Application</h2>
+Refer to the Application Framework release note for information.
+<br />
+<h2>6 Intended Behavior</h2>
+Please see 
+<a href="http://portal.ember.com/not-a-bug" target="_blank">http://portal.ember.com/not-a-bug</a>
+for an explanation of behaviors
+<br />
+that are intended but have caused confusion.
+</body>
+</html>

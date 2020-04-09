@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<callback prefix="emberAf" postfix="Callback">
+  <function id="NETWORK_FIND_FINISHED" name="Finished" returnType="void">
+    <description>
+      This callback is fired when the network-find plugin is finished with the forming or joining process.  The result of the operation will be returned in the status parameter.
+    </description>
+    <arg name="status" type="EmberStatus"/>
+    <codeForStub>
+    </codeForStub>
+  </function>
+</callback>

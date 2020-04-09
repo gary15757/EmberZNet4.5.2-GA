@@ -1,0 +1,30 @@
+// Copyright 2007 - 2011 by Ember Corporation. All rights reserved.
+// 
+// This file is generated. Please do not edit manually.
+// 
+// This file is generated from java code via the following methods:
+// com.ember.workbench.app_configurator.generator.EmbeddedCodeGenerator.generateAttributeSizes()
+//
+
+// Used ZCL attribute type sizes
+  ZCL_INT8U_ATTRIBUTE_TYPE, 1, 
+  ZCL_CHAR_STRING_ATTRIBUTE_TYPE, 16, 
+  ZCL_ENUM8_ATTRIBUTE_TYPE, 1, 
+  ZCL_BOOLEAN_ATTRIBUTE_TYPE, 1, 
+  ZCL_BITMAP8_ATTRIBUTE_TYPE, 1, 
+  ZCL_INT16U_ATTRIBUTE_TYPE, 2, 
+  ZCL_INT16S_ATTRIBUTE_TYPE, 2, 
+  ZCL_INT24U_ATTRIBUTE_TYPE, 3, 
+  ZCL_IEEE_ADDRESS_ATTRIBUTE_TYPE, 8, 
+  ZCL_UTC_TIME_ATTRIBUTE_TYPE, 4, 
+  ZCL_INT32S_ATTRIBUTE_TYPE, 4, 
+  ZCL_INT32U_ATTRIBUTE_TYPE, 4, 
+  ZCL_DATA8_ATTRIBUTE_TYPE, 1, 
+  ZCL_BITMAP32_ATTRIBUTE_TYPE, 4, 
+  ZCL_SECURITY_KEY_ATTRIBUTE_TYPE, 16, 
+  ZCL_BITMAP16_ATTRIBUTE_TYPE, 2, 
+  ZCL_INT8S_ATTRIBUTE_TYPE, 1, 
+  ZCL_ENUM16_ATTRIBUTE_TYPE, 2, 
+  ZCL_OCTET_STRING_ATTRIBUTE_TYPE, 64, 
+  ZCL_INT48U_ATTRIBUTE_TYPE, 6, 
+  ZCL_INT24S_ATTRIBUTE_TYPE, 3, 

@@ -1,0 +1,408 @@
+#ISD App Configuration:3.1
+#  Output directory which is used as a root for all generated
+#  files. The actual files relative to that directory are
+#  defined by individual file name.
+GenerationDirectory:__SAMPLE_APPLICATION__
+
+#  Identified of a stack descriptor used for this
+#  configuration. This should not be changed manually, unless
+#  you really know what you are doing.
+ConfiguratorID:EmberZNet4.5-EM35XEZSP
+
+#  Within each stack descriptor are multiple sample
+#  application. GeneratorID identifies a particular sample
+#  application within the stack.
+GeneratorID:v2
+
+#  Unique identifier for this device. This string should be in
+#  a form of a C identifier, as it will be used in both
+#  generated variable, macros, as well as file names. You
+#  should generally not use characters which are not valid
+#  characters in a C identifier here.
+DeviceName:HaLight
+
+#  Type of the endpoint. Each endpoint implement one endpoint
+#  type. There can be one or more endpoint types, regardless of
+#  number of actual endpoints.
+EndpointType:Primary,256
+
+#  The ZCL device that this particular endpoint is
+#  implementing.
+DeviceType:Primary,HA-onofflight
+
+#  Type of the endpoint. Each endpoint implement one endpoint
+#  type. There can be one or more endpoint types, regardless of
+#  number of actual endpoints.
+EndpointType:ha-light,256
+
+#  The ZCL device that this particular endpoint is
+#  implementing.
+DeviceType:ha-light,HA-onofflight
+
+#  Type of the endpoint. Each endpoint implement one endpoint
+#  type. There can be one or more endpoint types, regardless of
+#  number of actual endpoints.
+EndpointType:zigbee-custom,-1
+
+#  The ZCL device that this particular endpoint is
+#  implementing.
+DeviceType:zigbee-custom,zcustom
+
+#  Overrides a particular server configuration. This happens
+#  when you have chosen to include/exclude a server cluster
+#  that is optional. Contains 'clusterId', 'exclude/include'
+#  and the endpoint type name.
+OverrideServer:a,include,zigbee-custom
+
+OverrideServer:0,include,zigbee-custom
+
+#  Type of the endpoint. Each endpoint implement one endpoint
+#  type. There can be one or more endpoint types, regardless of
+#  number of actual endpoints.
+EndpointType:zigbee custom,-1
+
+#  The ZCL device that this particular endpoint is
+#  implementing.
+DeviceType:zigbee custom,zcustom
+
+#  Overrides a particular server configuration. This happens
+#  when you have chosen to include/exclude a server cluster
+#  that is optional. Contains 'clusterId', 'exclude/include'
+#  and the endpoint type name.
+OverrideServer:a,include,zigbee custom
+
+OverrideServer:0,include,zigbee custom
+
+#  A list of optional attributes that are included in this
+#  configuration. Format is a list of
+#  "clusterId,attributeId,<server|client>" entries, separated
+#  by semicolon.
+OptionalAttributes:10,2,server
+
+#  Defines what kind of security configuration does this
+#  application have.
+SecurityType:HA
+
+#  Points to the real ECC library that you wish to link
+#  against.
+RealECCPath:
+
+#  A path, relative to the root of the stack which indicates
+#  where to find a custom token header. This file will be
+#  included in the frameworks main token header located at
+#  app/framework/util/tokens.h
+TokenPath:
+
+#  Lists the channels that this application will be configured
+#  to use.
+Channels:11
+
+#  Definitions of individual endpoints. For each endpoint the
+#  endpoint number (1-254) is listed, as well as the endpoint
+#  type that this endpoint will serve.
+ConfiguredEndpoints:*6&-1&-1&1&ha-light,12&260&1911&3&zigbee custom
+
+#  In case of a network coprocessor, this lists a host
+#  processor used.
+Host:stm32f103ret
+
+#  Ember network processor targeted for this application.
+Platform:em357-ezsp
+
+#  Initial bit pattern that is used for the GPIO configuration
+#  register.
+InitialGPIO:0001010010011000
+
+#  Enable callbacks.
+Callbacks:ON_OFF_CLUSTER_ON_OFF_CLUSTER_SERVER_ATTRIBUTE_CHANGED
+
+#  Size of the table for source routing.
+SourceRouteTableSize:7
+
+#  If key switching is enabled, this value describes the kind
+#  of switch type that the application does.
+KeySwitchType:0
+
+#  The largest size for a fragment buffer.
+FragmentationMaxSize:255
+
+#  Size of receive queue on port 0.
+QueueSize0:64
+
+#  Configuration of heartbeat.
+HeartbeatLed:0
+
+#  Configuration of second application button.
+SecondButton:2
+
+#  Maximum size of the message in messaging cluster.
+MessagingMessageSize:16
+
+#  Amount of time the device will wait to poll its parent when
+#  it is expecting data, in quarter-seconds.
+NapQuarters:1
+
+#  Maximum number of groups supported.
+GroupTableSize:8
+
+#  Size of send queue on port 0.
+QueueSize0Tx:64
+
+#  Load control cluster event table size.
+LceEventTableSize:2
+
+#  Size of send queue on port 1.
+QueueSize1Tx:64
+
+#  Configuration of command-line interface.
+CLIMode:2
+
+#  Mode of port 0.
+Port0Mode:0
+
+#  Amount of time the device will wait to poll its parent when
+#  it is not expecting data, in quarter-seconds.
+HibernateQuarters:60
+
+#  Test meter type.
+TestMeterType:0
+
+#  Manufacturing code user in reporting.
+ManufacturingCode:43690
+
+#  The size of the portion of the address table used by the
+#  trust center as an address cache. The total size of the
+#  address table will be equal to this value plus the size of
+#  the address table set in the AddressTableSize.
+TrustCenterCacheSize:2
+
+#  Version of this device.
+DeviceVersion:0
+
+#  Amount of time the device will poll its parent when
+#  expecting an application level response from another device
+#  in the network before it gives up, in quarter-seconds.
+WakeTimeoutQuarters:4
+
+#  Maximum number of supported reported attributes.
+ReportTableSize:5
+
+#  If bindings are enabled the this is the maximum number of
+#  supported bindings.
+NumberOfBindings:2
+
+#  If key switch is time based, then this value contains the
+#  number of secconds between switches.
+KeySwitchInterval:604800
+
+#  Mode of port 1.
+Port1Mode:0
+
+#  The mode of the link key handling on a trust center.
+LinkKeyMode:2
+
+#  Maximum number of saved prices by the price cluster.
+PriceMaxPricesSaved:2
+
+#  Master endpoint which contains global information.
+DefaultDestinationEndpoint:10
+
+#  Size of link key table.
+LinkKeyTableSize:3
+
+#  Bootloader configuration.
+Bootloader:0
+
+#  Configuration of first application button.
+FirstButton:1
+
+#  Device Id used for the application.
+DeviceId:-1
+
+#  Profile Id used for the application.
+ProfileId:-1
+
+#  The type of key generation, random or ping-pong.
+KeyGenerationType:0
+
+#  Size of receive queue on port 1.
+QueueSize1:64
+
+#  The size of the stack address table which will be used by
+#  the stack to maintain IEEE to ZigBee short id mappings.
+AddressTableSize:2
+
+#  Serial port configuration.
+SerialPort:0
+
+#  The level of debugging supported.
+DebugLevel:0
+
+#  Maximum number of messages for messaging cluster.
+MessagingNumMessages:2
+
+#  Baud rate of serial port.
+BaudRate:19200
+
+#  Default power set on radio.
+RadioPower:3
+
+#  Maximum number of entries in the report collector table.
+ReportCollectorTableSize:2
+
+#  If not using multiple endpoint support, this value contains
+#  the default endpoint. With multiple endpoint support, this
+#  number is ignored.
+Endpoint:10
+
+#  Use this setting to turn on fragmentation.
+FragmentationEnable:false
+
+#  Enables concentrator support
+EnableConcentrator:false
+
+#  If the device needs to perform inter-PAN sends, then this
+#  option should be enabled.
+EnableInterPanSend:false
+
+#  Enable network key.
+NetworkKeyEnabled:false
+
+#  Turns on the application debug print-outs. Consumes more
+#  flash, but provides more debugging.
+PrintAppDebug:false
+
+#  Enable key switching.
+EnableKeySwitch:false
+
+#  Enable profile switching by the test meter.
+TestMeterProfiles:false
+
+#  Enable custom board header file, instead of configurable
+#  options.
+CustomBoardHeaderEnable:false
+
+#  Enable this option if you wish to enable device bindings.
+EnableBindings:true
+
+#  If this option is set to true, out-of-the-box reporting is
+#  enabled.
+EnableOOBReporting:false
+
+#  If this option is set to true, standard reporting is
+#  enabled.
+EnableStandardReporting:true
+
+#  Selects whether application will use real ECC library.
+UseRealECC:false
+
+#  If this option is turned on, then the code will enable the
+#  checking of the attributes.
+EnableAttributeRangeChecking:false
+
+#  Turns on the ZCL info print-outs. Consumes more flash, but
+#  provides more debugging.
+PrintZclInfo:true
+
+#  If this option is turned on, then appBuilder will
+#  automatically generate the files, immediatelly upon saving
+#  the ISC file.
+AutoGenerate:false
+
+#  Turn this option on, if end-device binding is enabled.
+EnableEndDeviceBind:false
+
+#  Turns on the application info print-outs. Consumes more
+#  flash, but provides more debugging.
+PrintAppInfo:true
+
+#  Enable random pan ID selection.
+RandomPanId:true
+
+#  Enable application handling of Zigbee Device Object requests
+#  related to endpoints.
+HandleEndpointZdoRequests:false
+
+#  Enable serial commands for ZDO.
+EnableZdoSerialCommands:false
+
+#  If this option is set to true, report collection is enabled.
+EnableReportCollection:false
+
+#  If true, then this concentrator is low ram, otherwise high
+#  ram
+LowRamConcentrator:true
+
+#  Enable application handling of unsupported Zigbee Device
+#  Object messages.
+HandleUnsupportedZdoRequests:false
+
+#  Enable link keys.
+EnableLinkKeys:true
+
+#  Enable test metering code.
+TestMeterEnable:false
+
+#  Turns on the ZCL debug print-outs. Consumes more flash, but
+#  provides more debugging.
+PrintZclDebug:false
+
+#  Enable application handling of Zigbee Device Object requests
+#  related to bindings.
+HandleBindingZdoRequests:false
+
+#  If this option is set to true, then MFG_INSTALL_CODE token
+#  is used for setting the security install code.
+UseSeInstallCodes:false
+
+#  Enables the statistics receiving.
+EnableReceiveStatistics:false
+
+#  Enable preconfigured keys for security.
+PreconfiguredKeyEnabled:false
+
+#  Enable application handling of supported Zigbee Device
+#  Object messages.
+ReceiveSupportedZdoRequests:false
+
+#  Enable extended decoding of ZDO.
+EnableZdoExtendedDecoding:false
+
+#  If the device needs to perform inter-PAN receives, then this
+#  option should be enabled.
+EnableInterPanReceive:false
+
+#  Enable occasional generated error by the test meter.
+TestMeterErrors:false
+
+#  Actual second network key.
+NetworkKey2:ABCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+#  Actual preconfigured key, if it is enabled.
+PreconfiguredKey:56777777777777777777777777777777
+
+#  Actual network key.
+NetworkKey:12333333333333333333333333333333
+
+#  Pan Id used for the application.
+PanId:0000000000000000
+
+#  Path of the custom board header file.
+CustomBoardHeaderPath:
+
+#  These are the various debug areas that you can turn on or
+#  off.
+DebugPrinting:on
+
+DebugPrinting:compile,ON_OFF_CLUSTER
+
+DebugPrinting:compile,REPORTING
+
+DebugPrinting:enable,ON_OFF_CLUSTER
+
+#  List of plugins that the configuration uses
+AppPlugins:groups-server,identify,network-find,on-off,scenes,time-server
+
+#  Plugin specific options
+AppPluginOption:EMBER_AF_PLUGIN_TIME_SERVER_MASTER,FALSE
+

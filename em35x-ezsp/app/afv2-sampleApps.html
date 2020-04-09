@@ -1,0 +1,391 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+<title>AppFramework V2 Command Line Interface 120-3027-000</title>
+
+</head><body>
+
+<h2>AppFramework V2 Command Line Interface</h2>
+
+<h3>120-3027-000</h3>
+
+
+<a name = "zigbeeApp"></a> <b>Ember Application Framework, Version 2 (AFV2)</b></br>
+<i>Synopsis: </i>an Application Framework that can be setup to implement ZigBee-compliant devices from various public profiles or any proprietary application profile for which XML description of clusters and devices has been provided.  This framework includes an implementation of the ZigBee Cluster Library, which allows building any ZCL-based device.  The AppBuilder tool within InSight Desktop is intended to serve as a graphical interface for configuration of this framework for new application targets.
+<br>
+<br>
+<i>Buttons Used:</i>
+<br>
+Note that the button mappings are configurable through AppBuilder's HAL Configuration tab, so you should consult your AppBuilder configuration to determine which GPIO each button (first and second) are mapped to and which are enabled.   
+<br>
+<br>
+Also note that FORM and JOIN activities below are implemented by the AFV2 "Network Find" plugin by default.  If this plugin is disabled in your AppBuilder configuration, these actions rely on your application code implementing some or all of the functions listed in the Implemented Callbacks list for the Network Find plugin.
+The BIND action described below relies on the network's Coordinator node being built with the optional End Device Bind feature. (Check "Enable End Device Bind" in the Stack Configuration tab of AppBuilder to enable this.)
+<br>
+<ul>
+<li> 1st Application Button: if not joined: FORM (if the device is capable of forming)<br>
+<li> 1st Application Button: if joined: BIND (send ZDO end device bind request)<br> 
+<li> 2nd Application Button: if not joined: JOIN <br>
+<li> 2nd Application Button: if joined: PERMIT JOINING <br>
+</ul>
+<i>Serial baud rates, ports used:</i> <br>
+Default baud rate is 115200 bps on UART1 for all devices.<br>
+This can be set to other baud rates using AppBuilder's HAL Configuration tab or by redefining EMBER_AF_BAUD_RATE.<br>
+<br>
+<br>
+<i><u><b>Serial commands supported:</b></u></i> <br>
+<b>NOTE:</b> Three different serial modes can used by AFV2 applications:<br>
+</br>
+<li> <b><i>FULL</i></b> - Supports all the commands listed below that pertain to the device. This mode uses the most flash. This mode is enabled by defining "ZA_CLI_FULL" and not defining "ZA_TINY_SERIAL_INPUT".  This is the default for new AppBuilder configurations if not changed via the HAL Configuration tab.
+<li> <b><i>MINIMAL</i></b> - (Not supported on EZSP Host platforms.)  Supports a subset of the commands listed below. It uses less flash than FULL mode and more flash than TINY mode. This mode is enabled by defining "ZA_CLI_MINIMAL" and not defining "ZA_TINY_SERIAL_INPUT"
+<li> <b><i>TINY</i></b> - (Not supported on EZSP Host platforms.)  Saves the most flash and saves RAM over the MINIMAL and FULL modes. This mode supports only single character commands and does not provide all the functionality that the FULL CLI provides. This mode is enabled by defining "ZA_TINY_SERIAL_INPUT".
+<p>
+
+<br>
+<i><b>Tiny Serial commands:</b> (Available only in TINY mode)</i> <br>
+<li> i = Gives information about the local node.
+<li> f = Forms a network on channel TINY_SERIAL_CHANNEL(11) and panID TINY_SERIAL_PANID (0x00AB).
+<li> j = Attempts to join a network on channel TINY_SERIAL_CHANNEL(11) and panID TINY_SERIAL_PANID (0x00AB).
+<li> p = Permits join for 20 seconds.
+<li> l = Leaves network.
+<li> s = Prints the networking stack's statistics counters.
+<li> t = Sends a read time cluster time attribute command to the ZC.
+<li> b = Sends a read basic cluster version attribute command to the ZC.
+<li> k = Prints security keys.
+<li> c = Clears security keys.
+<li> a = Establish a pArtner link key with the node defined by the "partnerLinkKeyEui" array in app/framework/util/af-main-soc.c.  User must define KEY_ESTABLISHMENT_ENDPOINT.
+<br>
+
+<br>
+<i><b>Minimal Serial commands: </b></i>the top level commands listed below and any sub commands are supported in minimal CLI mode </b></i><br>
+<li> bsend
+<li> debugprint (if debug printing for Application area is enabled)
+<li> keys
+<li> network
+<li> print
+<li> raw
+<li> send
+<li> send_multicast
+<li> version (if debug printing for Application area is enabled)
+<li> counters 
+<li> help
+<li> reset
+<li> echo
+<li> info
+<li> key-update
+<li> libs (if debug printing for Application area is enabled)
+<li> zdo (if configuration enables serial commadns for sending ZDO messages)
+<li> custom (if emberAfCustomCommandLineCallback is defined)
+
+<br>
+<br><i><b>V2 General commands:</b></i> <br>
+<li>help - <i> Shows the available commands. </i>
+<li>version - <i> Shows the version of the software </i>
+<li>reset - <i> Resets the device. </i>
+<li>counters - <i> Prints out the stack counters if application printing is turned on. The stack counter indexes are documented in stack/include/ember-types.h in the EmberCounterType enum</i>
+<li>option button0 - <i> Simulates button0 press. </i>
+<li>option button1 - <i> Simulates button1 press. </i>
+<li>echo [0|1] - <i>turn CLI echoing on (1) or off (0)</i>
+<li>debugprint [status | all_on | all_off | on {area} | off {area}] - <i>Query for status of debugprint mechanisms in each area, or turn all/certain portions of debug printing on/off at runtime (if compiled into the build).</i>
+<li>write [endpoint as int16u] [cluster ID as int16u] [attrID as int16u] [mask  (0 for client, 1 for server)] [dataType as int8u] [all attribute value bytes as "string" or {hex}]- <i> Writes the value specified to the attribute specified in the local attribute table. Example: write 0x01 0x0000 0x0010 1 0x21 { aa bb }</i>
+<li>read [endpoint as int16u] [cluster ID as int16u] [attrID as int16u] [mask  (0 for client, 1 for server)] - <i> Reads the value specified to the attribute specified in the local attribute table. Example: write 0x01 0x0000 0x0010 1 0x21 { aa bb }</i>
+<li>custom - <i>Executes the emberAfCustomCommandLineCallback if defined.  User is responsible for parsing arguments in callback context using API from app/util/serial/command-interpreter2.h. </i>
+<br>
+<br><i><b>V2 Informational commands:</b></i> <br>
+<li>info - <i> Gives information about the local node.</i>
+<li>libs - <i> Lists which optional libraries of the stack are implemented on this device</i>
+<li>option binding-table print - <i> Prints the binding table. </i>
+<li>option binding-table clear - <i> Clears the binding table. </i>
+<li>option binding-table set [1 byte binding table index] [2 byte cluster id] [1 byte local endpoint] [1 byte remote endpoint] [8 byte ieee address provided big endian] - <i>Set a binding table entry for the arguments specified.</i>
+<li>option address-table print - <i> Prints the address table. </i>
+<li>option address-table set [1 byte address table index] [2 byte node id] <i>Set an address table entry for the arguments specified.</i>
+<li>option print-rx-msgs {enable | disable} - <i>Turns printing of received message content on/off for CLI</i>
+<li>option route - <i>Prints current route table for this device (valid on SoC plattforms only and requires adding the DEBUG_PRINT_FOR_ROUTING_TABLE preprocessor define to the build.)</i>
+<li>keys print - <i>Prints the APS Link Key table.</i>
+<li>print attr - <i> Prints the ZCL attribute table. </i>
+<li>print identify - <i> Prints the identify cluster state. </i>
+<li>print groups - <i> Prints the groups table. </i>
+<li>print scenes - <i> Prints the scenes table.</i>
+<li>print c - <i> Prints the ias-ace info. </i>
+<li>print price - <i> Prints the Price table showing the currently configured prices. </i>
+<li>print message - <i> Prints the Message table, showing the currently configured or received message. </i>
+<li>print time - <i> Prints the current time. </i>
+<li>print report - <i> Prints the reporting table. </i>
+<br>
+<br><i><b>V2 Network commands:</b></i> <br>
+<li>network form [channel in decimal or 0x&lt;hex&gt;] [power in decimal or 0x&lt;hex&gt;] [panid 2 byte 0x&lt;hex&gt;] - <i> Starts a ZigBee network. 
+Ex: "network form 22 2 0xaabb" </i>
+<li>network pjoin [time in seconds in decimal or 0x&lt;hex&gt;] - <i> Enables permit joining on a ZigBee network. Use 0xff to leave joining on permanently</i>
+<li>network join [channel 1 byte in decimal or &lt;hex&gt;] [power 1 byte in decimal or &lt;hex&gt;] [panid 2 byte 0x&lt;hex&gt;] - <i> Attempts to join to a ZigBee network. The device uses ZA_DEVICE_TYPE when joining. If type is Coordinator it joins as a Router. Ex: "network join 22 2 0xaabb"</i>
+<li>network rejoin [secure in decimal or 0x&lt;hex&gt (0 for unencrypted, 1 for encrypted)] [channel mask in decimal or 0x&lt;hex&gt; (0 for current channel)]- <i> Attempts to rejoin a ZigBee network.  Attempts with encryption first and fall back to no encryption only if that fails.</i>
+<li>network leave
+
+<li>network extpanid [16 character (8 byte) hex string representing the extended PAN ID desired in hex inside {} without preceding 0x] - <i> Sets the extended PAN ID that will be used for forming or joining a network. This must be done before a device is part of a network. Ex: network extpanid { aa bb cc dd aa bb cc dd }</i>
+
+<li>network find [joinable | unused] - <i>Initiates a joinable network search or unused PAN ID search using the emberAfStartSearchForJoinableNetworkCallback or emberAfFindUnusedPanIdAndFormCallback (implemented in the Network Find plugin by default)</i>
+
+<li>option apsretry {on | off | default} - <i>Forces the AppFramework to set/clear the APS Retry option (in APS Frame options mask) for all subsequent outgoing messages; a value of "default" allows the AppFramework to use its own default logic to determine when the APS Retry option should be used.</i>
+
+<li>option disc [profileId as 4 character (2 byte) hex string] [clusterId as 4 character (2 byte) hex string] - <i> Sends a ZDO Match Descriptor Request for the server side of the specified cluster from the specified application profile. Match Descriptor Responses received are printed to the serial output.</i>
+
+<li>option edb [endpoint as 1 byte decimal or 0x&lt;hex&gt;]-  <i> Sends a ZDO End Device Bind Request using the local endpointspecified by ZA_GLOBAL_SRC_ENDPOINT. </i>
+
+<li>option agg - <i>(Requires Concentrator Support to be enabled on this device.)  Schedules a ZigBee PRO Many To One Route Request (MTORR) to be sent out at next opportunity, which will cause aggregation (many-to-one) routes to be created towards this concentrator.</i>
+
+<br>
+<br><i><b>V2 Security commands:</b></i> <br>
+<li>keys print - <i>Prints the APS Link Key table.</i>
+<li>keys clear - <i>Clears the APS Link Key table.</i>
+<li>key-update - <i>Begins the process of switching the network key to a new random key (valid for Trust Center node only)</i>
+<li>changekey {link | network} [16-byte key as array in MSB format] - <i>Changes the APS link key or (for Trust Center only) Network key used in future form/join operations.  (Only valid when not already in a network.)</i>
+<li>option link [index in key table decimal or 0x&lt;hex&gt;] [EUI64 in big endian format in hex inside {} without preceding 0x] [key bytes 0-15 in hex inside {} without preceeding 0x] - <i> Sets a link key in the link key table. </i> Example: option link 0x00 { 06 00 ab 41 64 30 00 0a } {aa bb cc dd ee ff aa bb cc dd ee ff aa bb cc dd} 
+<li>option register - <i> Initiates Smart Energy Registration including Key Establishment. This command expects that the device has already joined a smart energy network.</i>
+<li>option security aps {on | off} - <i>Toggles the use of APS security (application link keys) for SE clusters (on by default)</i>
+<li>cbke start [new partner id as int16u] [destination endpoint as int8u] - <i>Initiates Certificate-Based Key Establishment (CBKE) with target node on target endpoint</i>
+<li>cbke interpan [panID as int16u] [EUI64 as big-endian array] - <i>Initiates inter-PAN CBKE with target node on target PAN ID</i>
+<li>cbke partner [node ID as int16u] [destinationEndpoint as int8u] - <i>Initiates partner link key establishment (non-CBKE-based) with target node on target endpoint (which must support Key Establishment cluster) using Trust Center as trusted third party</i>
+<br>
+
+<br><i><b>V2 Commands for building and sending messages:</b></i> <br>
+<li>send [nodeID or broadcast mask as int16u] [src endpoint as int8u] [dst endpoint as int8u] - <i>Sends a message using the message that exists in the current send buffer (created using "zcl" command).</i>
+<li>send_multicast [multicast group ID as int16u] [src endpoint as int8u] [destination endpoint as int8u] - <i>Sends APS multicast to target group using specified source/destination endpoints</i>
+<li>bsend [src endpoint as int8u] - <i> Sends the current message to any device in the binding table that has a binding entry with a cluster ID matching the cluster specified in the current message frame and a source endpoint matching the one specified here (where 0 means any sourceEndpoint is OK).</i>
+<li>timesync [id as 4 character hex string or 0x&lt;hex&gt;] [src endpoint in decimal or 0x&lt;hex&gt;] [destination endpoint in decimal or 0x&lt;hex&gt;] - <i> Syncs time with the device specified by sending a read attribute command and using the read attribute response. </i>
+<li>interpan {short | group} [shortId or groupId for target as int16u] [short dest panid as int16u] [dest app-profile-id as int16u] -  <i>Sends an Inter-PAN message using the message that exists in the send buffer (created with "zcl" command) to the shortID specified on the destination PAN specified and using the Application Profile specified.</i>
+<li>raw [clusterID in decimal or 0x&lt;hex&gt;] [All data in string or hex array inside curly braces {}] - <i> Creates a message by specifying the raw bytes. To specify messages larger than 32 bytes use this command first and then use "raw2". Use "send" to send the message once it has been created. Ex: raw 0x0f {00 0A 00 11 22 33 44 55} sends a message to cluster 15 (0xF) of length 8 which includes the ZCL header.</i>
+<br>
+<br><i><b>AFV2 ZDO commands:</b></i>
+<li>zdo simple &lt;2 byte dest&gt; &lt;1 byte target ep&gt; - Sends a simple description request to the chosen destination and endpoint.</li>
+<li>zdo node &lt;2 byte dest&gt; - Sends a node descriptor request to the destination specified.</li>
+<li>zdo match  &lt;2 byte dest&gt; &lt;2 byte profile&gt; - Sends a match descriptor request to the destination specified.</li>
+<li>zdo bind   &lt;2 byte dest&gt; &lt;1 byte local ep&gt; &lt;1 byte remote ep&gt; &lt;2 byte cluster&gt; &lt;8 byte THEIR eui&gt; &lt;8 byte dest eui&gt; - Sends a bind request to the destination specified for the given arguments. </li>
+<li>zdo in-cl-list add &lt;array of two byte cluster IDs&gt; - Adds to the "in" or "server" cluster list. </li>
+<li>zdo in-cl-list clear - Clears the "in" or "server" cluster list. </li>
+<li>zdo out-cl-list add &lt;array of two byte clusters IDs&gt; - Adds to the "out" or "client" cluster list.</li>
+<li>zdo out-cl-list clear - Clears the "out" or "client" cluster list.</li>
+<li>zdo nwk-upd chan  &lt;1 byte channel&gt; - Sends an update channel request.</li>
+<li>zdo nwk-upd set   &lt;2 byte nwk mgr id&gt;  &lt;4 byte chan mask&gt; - Sends a set network manager request for the given network manager node id and active channels provided in the 4 byte channel mask.</li>
+<li>zdo nwk-upd scan  &lt;2 byte target node id&gt; &lt;1 byte scan duration&gt; &lt;2 byte scan count&gt; - Performs an energy scan.</li>
+<li>zdo active &lt;2 byte target node id&gt; - Sends an active endpoint request.</li>
+<p>
+<br><i><b>V2 ZCL Global serial commands:</b></i>
+<br><i> Note: These commands construct a payload. You must call "send" to send the message.</i>
+<br><i> Note: The "zcl global direction" command can be used to change the direction (client-to-server or server-to-client) of future ZCL Global commands.  By default, commands are sent client-to-server.</i>
+<li>zcl global read [cluster in decimal or 0x&lt;hex&gt;] [attrID in decimal or 0x&lt;hex&gt;]
+<li>zcl global write [cluster in decimal or 0x&lt;hex&gt;] [attrID in decimal or 0x&lt;hex&gt;] [data type in decimal or 0x&lt;hex&gt;] [data (variable size depends on data type) as a "&lt;string&gt;" or {&lt;hex array&gt}]
+<li>zcl global uwrite [cluster in decimal or 0x&lt;hex&gt] [attrID as decimal  or 0x&lt;hex&gt] [data type as decimal  or 0x&lt;hex&gt] [data as a "&lt;string&gt;" or {&lt;hex array&gt}]
+<li>zcl global nwrite [cluster in decimal or 0x&lt;hex&gt] [attrID as decimal  or 0x&lt;hex&gt] [data type as decimal or 0x&lt;hex&gt] [data as a "&lt;string&gt;" or {&lt;hex array&gt}]
+<li>zcl global discover [cluster in decimal or 0x&lt;hex&gt] [attrID as decimal or 0x&lt;hex&gt] [max # to report in decimal or 0x&lt;hex&gt]
+<li>zcl global report-read [cluster in decimal or 0x&lt;hex&gt] [attrID as decimal  or 0x&lt;hex&gt] [direction in decimal  or 0x&lt;hex&gt (0 for client-to-server, 1 for server to client)]
+<li>zcl global send-me-a-report [cluster in decimal or 0x&lt;hex&gt] [attrID in decimal  or 0x&lt;hex&gt] [data type as decimal  or 0x&lt;hex&gt] [min report time as decimal  or 0x&lt;hex&gt] [max report time as decimal  or 0x&lt;hex&gt] [reportable change as a "&lt;string&gt;" or {&lt;hex array&gt}]
+<li>zcl global expect-report-from-me [cluster in decimal or  0x&lt;hex&gt] [attrID as decimal  or  0x&lt;hex&gt] [timeout in decimal or  0x&lt;hex&gt] 
+<li>zcl global direction [direction in decimal or 0x&lt;hex&gt (0 for client-to-server, 1 for server to client)]
+<br>
+
+<br><i> <b>ZCL reporting commands:</b></i>
+<li>add-report-entry [node id as int16u] [src endpoint as int8u] [dst endpoint as int8u] [cluster id as int16u] [attribute id as int16u] [client/server mask as 0 for client, 1 for server] [attribute type as int8u] [min interval as int16u] [max interval as int16u] [reportable change as int32u] - <i>Adds a new ZCL report table entry to the local device using the supplied entry fields</i>
+<p>
+<br><i> <b>ZCL cluster-specific serial commands:</b></i>
+<br><i> Note: These commands construct a payload. You must call "send" to send the message.</i>
+<br><i> Note: These commands are available on a per-cluster basis. The application must have defined the client (or server) side of the cluster to have access to these commands.</i>
+<br><i> Note: The send command must be followed by the short address to which the message should be sent.</i>
+<br><i>       Example: </i>
+<br>on-off-client> zcl on-off off
+<br>on-off-client> send 0
+<br>ias-zone-server> zcl ias-zone enroll
+<br>ias-zone-server> send 05c7
+<br>
+<br><i> <b>ZCL Time Server commands:</b></i>
+<li> zcl time [UTC Time (seconds since 1/1/2000)in hex or decimal] - <i> All arguments in decimal. Sets the local time to the value specified. </i>
+<br>
+<br><i> <b>ZCL Basic Client commands:</b></i>
+<li>zcl basic rtfd
+<br>
+<br><i> <b>ZCL Identify Client commands:</b></i>
+<li>zcl identify id [identify time as 4 character hex string]
+<li>zcl identify query
+<br>
+<br><i> <b>ZCL Identify Server commands:</b></i>
+<li>zcl identify on [endpoint in decimal or 0x&lt;hex&gt;] [seconds in decimal or 0x&lt;hex&gt;] - <i> Turns on identify on the local device for the number of seconds specified. </i>
+<li>zcl identify off [endpoint in decimal or 0x&lt;hex&gt;] - <i> Turns off identify on the local device. </i>
+<br>
+<br><i> <b>ZCL Groups Client commands:</b></i>
+<li>zcl groups add [groupId as 4 character hex string] [name as 16 character ascii string]
+<li>zcl groups view [groupId as 4 character hex string]
+<li>zcl groups get [count in decimal] [[groupId as 4 character hex string] * count]
+<li>zcl groups remove [groupId as 4 character hex string]
+<li>zcl groups rmall
+<li>zcl groups ad-if-id [groupId as 4 character hex string] [name as 16 character ascii string]
+<br>
+<br><i> <b>ZCL Scenes Client commands:</b></i>
+<li>zcl scenes add    [groupId as 4 character hex string] [sceneId as 2 character hex string] [transition time as 4 character hex string] [name as 16 character ascii string] 
+<li>zcl scenes view [groupId as 4 character hex string] [sceneId as 2 character hex string]
+<li>zcl scenes remove [groupId as 4 character hex string] [sceneId as 2 character hex string]
+<li>zcl scenes rmall [groupId as 4 character hex string]
+<li>zcl scenes store [groupId as 4 character hex string] [sceneId as 2 character hex string]
+<li>zcl scenes recall [groupId as 4 character hex string] [sceneId as 2 character hex string]
+<li>zcl scenes get-membership [groupId as 4 character hex string]
+<li>zcl scenes set ["on" or "off" keyword] [level value as integer] - <i> Sets the scene extensions for on/off and level control. </i> 
+<br>
+<br><i> <b>ZCL On/Off Client commands:</b></i>
+<li>zcl on-off off
+<li>zcl on-off on
+<li>zcl on-off toggle
+<br>
+<br><i> <b>ZCL Level Control Client commands:</b></i>
+<br> <i> Note: All arguments are given in hex. The value listed after an argument is the number of bytes it expects. The number of characters expected is 2 times that number.</i>
+<li>zcl level-control mv-to-level [level:1] [transition time:2]
+<li>zcl level-control move [mode:1] [rate:1]
+<li>zcl level-control step [step:1] [step size:1] [trans time:2]
+<li>zcl level-control stop
+<li>zcl level-control o-mv-to-level [level:1] [trans time:2]
+<li>zcl level-control o-move [mode:1] [rate:1]
+<li>zcl level-control o-step [step:1] [step size:1] [trans time:2]
+<li>zcl level-control o-stop 
+<br>
+<br><i> <b>ZCL Thermostat Client commands:</b></i>
+<li>zcl tstat set [mode as 2 character hex string] [amount as 2 character hex string]
+<br>
+<br><i> <b>ZCL IAS Zone Server commands:</b></i>
+<li>zcl ias-zone enroll [zone type as 4 character hex string] [manuf code as 4 character hex string]
+<li>zcl ias-zone sc [zone status as 4 character hex string] [extended status as 2 character hex string]
+<br>
+<br><i> <b>ZCL IAS Zone Client commands:</b></i>
+<li>zcl ias-zclient pt - <i>Prints IAS Zone table</i>
+<br>
+<br><i> <b>ZCL IAS ACE Client commands:</b></i>
+<li>zcl ias-ace arm [mode as 2 character hex string]
+<li>zcl ias-ace bypass [numZones as 2 character hex string] [zones: numZones zones as 2 character hex string]
+<li>zcl ias-ace emergency
+<li>zcl ias-ace fire
+<li>zcl ias-ace panic
+<li>zcl ias-ace getzm
+<li>zcl ias-ace getzi [zoneID as int16u]
+<br>
+<br><i> <b>ZCL Color Control Client commands:</b></i>
+<li>zcl colorcontrol movetohue [hue: int8u] [direction: int8u] [transition time in tenths of seconds: int16u]
+<li>zcl colorcontrol movehue [moveMode: int8u] [rate: int8u]
+<li>zcl colorcontrol stepHue [stepMode: int8u] [stepSize: int8u] [transitionTime in tenths of seconds: int16u]
+<li>zcl colorcontrol movetosat [saturation: int8u] [transition time in tenths of seconds: int16u]
+<li>zcl colorcontrol movesat [moveMode: int8u] [rate: int8u]
+<li>zcl colorcontrol stepsat [mode: int8u] [stepSize: int8u] [transition time in tenths of seconds: int16u]
+<li>zcl colorcontrol movetohueandsat [hue: int8u] [saturation: int8u] [transition time in tenths of seconds: int16u]
+<li>zcl colorcontrol movecolor [color X: int8u] [color Y: int8u] [transition time in tenths of seconds: int16u]
+<li>zcl colorcontrol stepcolor [step X: int8u] [step Y: int8u] [transition time in tenths of seconds: int16u]
+<li>zcl colorcontrol movetocolortemp [color temp: int16u] [transition time in tenths of seconds: int16u]
+<br>
+<br><i> <b>ZCL Demand Response Load Control Server commands:</b></i>
+<li>zcl drlc lce [eventId as 8 character (4 byte) hex string] [start time as 8 character (4 byte) hex string] [duration in minutes as 4 character (2 byte) hex string] [event control as 2 character (1 byte) hex string] - <i> Constructs Load Control Event </i>
+<li>zcl drlc slce [index (1 byte) decimal or hex] [length (1 byte) decimal or hex] [load control event bytes] – <i>Schedules a load control event in the DRLC server plugin's scheduled load control event table</i>. The Index represents the index in the DRLC Server plugin’s scheduled load control event table. The length indicates the number of bytes in the load control event and is expected to be 23. Load control event bytes are expected as 23 raw bytes in the form {&lt;eventId:4&gt; &lt;deviceClass:2&gt; &lt;ueg:1&gt; &lt;startTime:4&gt; &lt;duration:2&gt; &lt;criticalityLevel:1&gt; &lt;coolingTempOffset:1&gt; &lt;heatingTempOffset:1&gt; &lt;coolingTempSetPoint:2&gt; &lt;heatingTempSetPoint:2&gt; &lt;afgLoadPercentage:1&gt; &lt;dutyCycle:1&gt; &lt;eventControl:1&gt; } all multibyte values should be little endian as though they were coming over the air. 
+<i>Example: zcl drlc slce 0 23 {ab 00 00 00 ff 0f 00 00 00 00 00 01 00 01 00 00 09 1a 09 1a 0a 00 00}</i></li>
+<li>zcl drlc sslce [index (1 byte)] – <i>Sends a scheduled load control event from the DRLC server's scheduled load control event table</i>. Loads a load control event out of the DRLC server’s scheduled load control event table into the send buffer so that it can be sent over the air. The user must still use the send command to actually send the load control event over the air.</li>
+<li>zcl drlc cl [eventId as 8 character (4 byte) hex string] [device class as 2 byte hex or decimal] [utility enrollment group (1 byte) hex or decimal] [cancel control 1 byte hex or decimal] [start time as 8 character (4 byte) hex string] - <i>Build Cancels Load Control Event command.</i>
+<li>zcl drlc ca - <i>Builds "Cancels all load control events" command. </i>
+<li>clear_events - <i>Clears the load control event table on the local device</i>
+<br>
+<br><i> <b>ZCL Demand Response Load Control Client commands:</b></i>
+<li> zcl drlc gse [number of events to get as 2 character (1 byte) hex string] - <i> Get Scheduled Events command </i>
+<li> zcl drlc opt in &lt;eventid:4&gt; - <i> Opts in to the DRLC event indicated by eventid.</i>
+<li> zcl drlc opt out &lt;eventid:4&gt; - <i> Opts out of DRLC event indicated by eventid.</i>
+<br>
+<br><i> <b>ZCL Simple Metering Client commands:</b></i>
+<li>zcl sm gp [type as 2 character (1 byte) hex string] [time as 8 character (4 byte) hex string] [intervals as 2 character (1 byte) hex string] - <i> Get Profile</i>
+<br>
+<br><i> <b>ZCL Simple Metering Server commands:</b></i>
+<br><i> These commands are used on an ESP or a Meter to simulate the behavior of a meter.</i>
+<li> zcl tm print - <i> Prints the state of the Test Meter setup. </i>
+<li> zcl tm rate [consumption rate (2 bytes) in decimal or 0x&lt;hex&gt;] - <i> Sets the normal consumption rate per second.</i>
+<li> zcl tm variance [variance (2 bytes) in decimal or 0x&lt;hex&gt;] - <i> Sets a variance to add to the normal consumption rate each second. If the consuption rate is set to 2 and variance is set to 3 the consumption rate will be between 2 and 5 units per second. The actual number is randomly chosen</i>
+<li> zcl tm adjust [endpoint (1 byte) in decimal or 0x&lt;hex&gt;] - <i> Adjusts the consumption of the meter based on the time value, as if the device was consuming at the currently set rate and variance for the whole of the current day.</i>
+<li> zcl tm [electric | gas | off] [endpoint (1 byte) in decimal or 0x&lt;hex&gt;] - <i> Sets the Test Meter mode. electric or gas turn the test mode on. off turns the test mode off.</i>
+<li> zcl tm rnd_error [data (1 byte) in decimal or 0x&lt;hex&gt;] - <i> Sets the random error occurence (0 to disable).</i>
+<li> zcl tm set_error [data (1 byte) in decimal or 0x&lt;hex&gt;] [endpoint (1 byte) in decimal or 0x&lt;hex&gt;] - <i> Sets the status attribute to the given value.</i>
+<li> zcl tm profiles [data (1 byte) in decimal or 0x&lt;hex&gt;] - <i> 0: disable profiles, 1: enable profiles, 2: clear profiles, 3: print profiles.</i>
+<br>
+<br><i> <b>ZCL Price Client commands:</b></i>
+<li>zcl price current 
+<li>zcl price scheduled [startTime as 8-character (4-byte) hex string representing timestamp in seconds] [number of events requested, as 1-byte decimal value, in the range 0-5; 0 means send all scheduled prices]
+<br>
+<br><i> <b>ZCL Price Server commands:</b></i>
+<br><i> These commands are used for configuring Prices in the Price table on the ESP. The Price table can be viewed by using "print price" </i>  
+<li> zcl set-price clear
+<li> zcl set-price who [index as decimal or 0x&lt;hex&gt;] [providerID as 8 character (4 byte) hex string] [label as up to 13 character ascii string] [eventId as 8 character (4 byte) hex string]
+<li> zcl set-price what [index as decimal or 0x&lt;hex&gt;] [unitOfMeas as 2 character (1 byte) hex string] [currency as 4 character (2 byte) hex string] [ptd 2 character (1 byte) hex string] [PTRT 2 character (1 byte) hex string]
+<li> zcl set-price when [index as decimal or 0x&lt;hex&gt;] [startTime as 8 character (4 byte) hex string] [duration 4 character (2 byte) hex string]
+<li> zcl set-price price [index as decimal or 0x&lt;hex&gt;] [price as 8 character (4 byte) hex string] [ratio as 2 character (1 byte) hex string] [genPrice as 8 character (4 byte) hex string] [genRatio 2 character (1 byte) hex string]
+<li> zcl sprice publish - <i> Sets up an unsolicited publish price command.</i>
+<br>
+<br><i> <b>ZCL Messaging Client commands:</b></i>
+<li>zcl message get - <i> Sends a get last message command.</i>
+<li>zcl message confirm - <i> Sends a message confirmation command.</i>
+<br>
+<br><i> <b>ZCL Messaging Server commands:</b></i>
+<li> zcl message display - <i> Sends a display message using the current message. </i>
+<li> zcl message cancel - <i> Sends a cancel message using the current message. </i>
+<br> <i> Note: The following commands are for setting the message on the Messaging Server.</i>
+<li> zcl set-message message [message up to 16 ASCII character string]
+<li> zcl set-message append [message up to 16 ASCII characters to append to the current message]
+<li> zcl set-message id [message ID as a four-byte hex string]
+<li> zcl set-message time [start time in seconds as a four-byte hex string] [duration in minutes as a two-byte hex string]
+<li> zcl set-message transmission [normal|ipan|both]
+<li> zcl set-message importance [low|medium|high|critical]
+<li> zcl set-message confirm [not|req]
+<li> zcl set-message valid - <i> Marks the message as valid (messages must be valid before using the display or cancel commands). </i>
+<li> zcl set-message invalid - <i> Marks the message as invalid (this does not cancel the message). </i>
+<br>
+<br><i> <b>ZCL Door Lock Client commands:</b></i>
+<li>zcl lock lock
+<li>zcl lock unlock
+<br>
+<br><i> <b>ZCL SE Tunneling Client commands:</b></i>
+<li>zcl tunneling request [protocolId: int8u] [manufacturerCode: int16u] [flow control: 0=false; 1=true] - <i> Tunnel Request command </i>
+<li>zcl tunneling close	[tunnelId: int16u] - <i> Tunnel Close command </i>
+<li>zcl tunneling transfer-to-server [tunnelId: int16u] [data as byte array or string] - <i> Transfer requested bytes to Tunnel server</i>
+<li>zcl tunneling random-to-server [tunnelId: int16u] [randomLength: int16u] - <i> Transfer specified number of random bytes to Tunnel server</i>
+<br>
+<br><i> <b>ZCL SE Tunneling Server commands:</b></i>
+<li>zcl tunneling transfer-to-client [tunnelId: int16u] [data as byte array or string] - <i> Transfer requested bytes to Tunnel server</i>
+<li>zcl tunneling random-to-client [tunnelId: int16u] [randomLength: int16u] - <i> Transfer specified number of random bytes to Tunnel server</i>
+<br>
+<br><i> <b>ZCL OTA Client commands:</b></i>
+<li>zcl ota client printImages	- <i> Prints all images that are stored in the OTA storage module along with their index.</i>
+<li>zcl ota client info	- <i> The Manufacturer ID, Image Type ID, and Version information that are used when a query next image is sent to the server by the client.</i>
+<li>zcl ota client status	- <i> Prints information on the current state of the OTA client download. </i>
+<li>zcl ota client verify <index>	- <i> Performs signature verification on the image at the specified index.</i>
+<li>zcl ota client bootload <index>	- <i> Bootloads the image at the specified index by calling the OTA bootload callback.</i>
+<li>zcl ota client start - <i> Starts the OTA client state machine.  The state machine discovers the OTA server, queries for new images, downloads the images, and waits for the server command to upgrade.</i>
+<li>zcl ota client stop	- <i> Stops the OTA client state machine.</i> 
+
+
+<br>
+<br><i> <b>ZCL OTA Server commands:</b></i>
+<li>zcl ota server printImages - <i> Prints all images that are stored in the OTA storage module along with their index.</i> 
+<li>zcl ota server policy print - <i> Prints the polices used by the OTA Server Policy Plugin.</i>
+
+<li>zcl ota server policy query <int> - <i>Sets the policy used by the OTA Server Policy Plugin when it receives a query request from the client.  The policy values are:
+0: Upgrade if server has newer (default), 
+1: Downgrade if server has older, 
+2: Reinstall if server has same, 
+3: No next version (no next image is available for download).</i>
+
+<li>zcl ota server policy blockRequest <int> - <i>Sets the policy used by the OTA Server Policy Plugin when it receives an image block request.  The policy values are:
+0: Send block (default), 
+1: Delay download once for 2 minutes, 
+2: Always abort download after first block.</i>
+
+<li>zcl ota server policy upgrade <int>	- <i>Sets the policy used by the OTA Server Policy Plugin when it receives an upgrade end request.  The policy values are:
+0: Upgrade Now (default), 
+1: Upgrade in 2 minutes, 
+2: Ask me later to upgrade.</i>
+
+<li>zcl ota server notify <dest> <payload type> <jitter> <manuf-id> <device-id> <version> - <i> Sends an OTA Image Notify message to the specified destination indicating a new version of an image is available for download.  The payload type field values are:
+0: Include only jitter field, 
+1: Include jitter and manuf-id, 
+2: Include jitter, manuf-id, and device-id, 
+3: Include jitter, manuf-id, device-id, and version.</i>
+<br>
+<hr>
+
+
+
+</body>
+</html>
