@@ -1,0 +1,402 @@
+#ISD App Configuration:
+# Simplicity Studio version: 5.18.1.202003110938-18
+#  Directory of framework within the stack, which helps in case there are more
+#  frameworks within a stack.
+FrameworkDirectory:app\framework
+
+#  Identified of a stack descriptor used for this configuration. This should not
+#  be changed manually, unless you really know what you are doing.
+ConfiguratorID:auto-EM35XEZSP
+
+#  Output directory which is used as a root for all generated files. The actual
+#  files relative to that directory are defined by individual file name.
+GenerationDirectory:PATH(ISC_RELATIVE):../../..
+
+#  Unique identifier for this device. This string should be in a form of a C
+#  identifier, as it will be used in both generated variable, macros, as well as
+#  file names. You should generally not use characters which are not valid
+#  characters in a C identifier here.
+DeviceName:Zigbee_project
+
+#  Type of the endpoint. Each endpoint implement one endpoint type. There can be
+#  one or more endpoint types, regardless of number of actual endpoints.
+EndpointType:Primary,1282
+
+#  The ZCL device that this particular endpoint is implementing.
+DeviceType:Primary,SE-IPD
+
+#  Overrides a particular client configuration. This happens when you have
+#  chosen to include/exclude a client cluster that is optional. Contains
+#  'clusterId', 'exclude/include' and the endpoint type name.
+OverrideClient:700,include,Primary
+
+OverrideClient:702,include,Primary
+
+#  ZigBee PRO network configuration.  Each endpoint belongs to a single network
+#  configuration.  There can be one or more network configurations.
+ZigbeeProNetwork:*Primary,ZA_COORDINATOR,HA
+
+#  Lists the channels that this application will be configured to use.
+Channels:11
+
+#  Definitions of individual endpoints. For each endpoint the endpoint number
+#  (1-254) is listed, as well as the endpoint type that this endpoint will
+#  serve.
+ConfiguredEndpoints:*1&-1&-1&1&Primary&Primary
+
+#  A single specification version for each profile defining the max version of
+#  the spec supported by this configuration.
+SpecVersions:
+
+#  In case of a network coprocessor, this lists a host processor used.
+Host:stm32f103ret
+
+#  Ember network processor targeted for this application.
+Platform:pc
+
+#  The exact toolchain along with it's version targeted for this application.
+ExactArchitectureToolchain:com.silabs.ss.framework.project.core.noToolChain:0.0.0
+
+#  Enable callbacks.
+Callbacks::
+
+#  If bindings are enabled then this is the maximum number of supported
+#  bindings.
+NumberOfBindings:2
+
+#  The size of the stack address table which will be used by the stack to
+#  maintain IEEE to ZigBee short id mappings.
+AddressTableSize:2
+
+#  The size of the portion of the address table used by the trust center as an
+#  address cache. The total size of the address table will be equal to this
+#  value plus the size of the address table set in the AddressTableSize.
+TrustCenterCacheSize:2
+
+#  Manufacturing code user in reporting.
+ManufacturingCode:4136
+
+#  Maximum number of supported reported attributes.
+ReportTableSize:5
+
+#  The mode of the link key handling on a trust center.
+LinkKeyMode:2
+
+#  If not using multiple endpoint support, this value contains the default
+#  endpoint. With multiple endpoint support, this number is ignored.
+Endpoint:10
+
+#  Version of this device.
+DeviceVersion:1
+
+#  Master endpoint which contains global information.
+DefaultDestinationEndpoint:10
+
+#  Profile Id used for the application.
+ProfileId:-1
+
+#  Device Id used for the application.
+DeviceId:-1
+
+#  The largest size for a fragment buffer.
+FragmentationMaxSize:255
+
+#  Size of the table for source routing.
+SourceRouteTableSize:7
+
+#  Default power set on radio.
+RadioPower:3
+
+#  The level of debugging supported.
+DebugLevel:1
+
+#  Configuration of command-line interface.
+CLIMode:2
+
+#  If key switching is enabled, this value describes the kind of switch type
+#  that the application does.
+KeySwitchType:0
+
+#  If key switch is time based, then this value contains the number of seconds
+#  between switches.
+KeySwitchInterval:604800
+
+#  The type of key generation, random or ping-pong.
+KeyGenerationType:0
+
+#  Configuration of heartbeat.
+HeartbeatLed:2
+
+#  Configuration of first application button.
+FirstButton:1
+
+#  Configuration of second application button.
+SecondButton:2
+
+#  Amount of time the device will wait to poll its parent when it is expecting
+#  data, in quarter-seconds.
+NapQuarters:1
+
+#  Amount of time the device will wait to poll its parent when it is not
+#  expecting data, in quarter-seconds.
+HibernateQuarters:60
+
+#  Amount of time the device will poll its parent when expecting an application
+#  level response from another device in the network before it gives up, in
+#  quarter-seconds.
+WakeTimeoutQuarters:4
+
+#  If this option is set to true, standard reporting is enabled.
+EnableStandardReporting:false
+
+#  If the device needs to perform inter-PAN sends, then this option should be
+#  enabled.
+EnableInterPanSend:false
+
+#  If the device needs to perform inter-PAN receives, then this option should be
+#  enabled.
+EnableInterPanReceive:false
+
+#  Enable serial commands for ZDO.
+EnableZdoSerialCommands:false
+
+#  Enable this option if you wish to enable device bindings.
+EnableBindings:true
+
+#  Turn this option on, if end-device binding is enabled.
+EnableEndDeviceBind:false
+
+#  Enables the statistics receiving.
+EnableReceiveStatistics:false
+
+#  If true, then command discovery commands are supported.
+SupportCommandDiscovery:true
+
+#  Selects whether application will use the ECC 163k1 library.
+UseEcc163k1:false
+
+#  Selects whether application will use the ECC 283k1 library.
+UseEcc283k1:false
+
+#  Enable preconfigured keys for security.
+PreconfiguredKeyEnabled:false
+
+#  Enable network key.
+NetworkKeyEnabled:false
+
+#  If this option is turned on, then appBuilder will automatically generate the
+#  files, immediately upon saving the ISC file.
+AutoGenerate:false
+
+#  Enable key switching.
+EnableKeySwitch:false
+
+#  Use this setting to turn on fragmentation.
+FragmentationEnable:false
+
+#  Enables concentrator support
+EnableConcentrator:true
+
+#  If true, then this concentrator is low ram, otherwise high ram
+LowRamConcentrator:true
+
+#  If this option is set to true, then MFG_INSTALL_CODE token is used for
+#  setting the security install code.
+UseSeInstallCodes:false
+
+#  If this option is turned on, then the code will enable the checking of the
+#  attributes.
+EnableAttributeRangeChecking:false
+
+#  Enable application handling of supported ZigBee Device Object messages.
+ReceiveSupportedZdoRequests:false
+
+#  Enable application handling of unsupported ZigBee Device Object messages.
+HandleUnsupportedZdoRequests:false
+
+#  Enable application handling of ZigBee Device Object requests related to
+#  endpoints.
+HandleEndpointZdoRequests:false
+
+#  Enable application handling of ZigBee Device Object requests related to
+#  bindings.
+HandleBindingZdoRequests:false
+
+#  Use token for TX power mode.
+TxPowerModeUseToken:true
+
+#  Enable boost power mode.
+BoostMode:false
+
+#  Enable the alternate transmitter output.
+AlternatePowerMode:false
+
+#  Use legacy CLI instead of generated CLI.
+LegacyCli:false
+
+#  Add Custom CLI sub-menu
+AddCustomCli:false
+
+#  Include command and argument descriptions in the embedded code.
+IncludeCommandDescriptions:true
+
+#  If set, then project-specific callbacks file will be generated.
+GenerateCallbacksFile:true
+
+#  The manufacturer code for this app defaults to 0.
+ManufacturerCodeDefaultIsZero:true
+
+#  Enable random pan ID selection.
+RandomPanId:true
+
+#  Actual preconfigured key, if it is enabled.
+PreconfiguredKey:56777777777777777777777777777777
+
+#  Actual network key.
+NetworkKey:12333333333333333333333333333333
+
+#  Actual second network key.
+NetworkKey2:ABCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+#  Pan Id used for the application.
+PanId:0000000000000000
+
+
+# Setup configurations
+{setupId:additionalFiles
+}
+{setupId:boardHeader
+allowMissingHeader:false
+useHeaderInPlace:false
+}
+{setupId:bootloader
+}
+{setupId:debugConfiguration
+on
+area name off
+appSerial=1
+}
+{setupId:halOptions
+}
+{setupId:hwConfig
+featureLevel=1
+active=true
+}
+{setupId:information
+}
+{setupId:macros
+}
+{setupId:quizz
+}
+{setupId:rf4ce
+nodeCapabilities=0
+vendorId=65521
+vendorString=
+userString=
+deviceTypes=[254]
+profileIds=[0]
+power=3
+}
+{setupId:rf4ceMso
+}
+{setupId:rf4ceZrc
+}
+{setupId:serial
+useHwConfigurator=false
+}
+{setupId:template
+--version:2
+}
+{setupId:token
+}
+#  The name of the set of Command Line Interface (CLI) commands that are
+#  compiled into the application by default.
+CliCommandSet:Full
+
+#  These are the various Command Line Interface (CLI) commands that can be
+#  included, or excluded (if they are included by default), in the application.
+#  Plugin configuration
+appPlugin:bacnet-protocol-tunnel,true
+
+appPlugin:basic,false
+appPlugin:color-control,true
+
+appPlugin:commissioning,false
+appPlugin:drlc,true
+
+appPlugin:drlc-server,false
+appPlugin:general-response-commands,false
+appPlugin:generic-tunnel,true
+
+appPlugin:groups-client,false
+appPlugin:groups-server,true
+
+appPlugin:ias-ace-zone,true
+
+appPlugin:ias-wd-server,true
+
+appPlugin:ias-zone-server,true
+
+appPlugin:identify,true
+
+appPlugin:interpan,true
+
+appPlugin:key-establishment,true
+
+appPlugin:level-control,true
+
+appPlugin:messaging-client,true
+
+appPlugin:messaging-server,true
+
+appPlugin:network-find,true
+
+appPlugin:on-off,true
+
+appPlugin:ota-bootload,true
+
+appPlugin:ota-client,true
+
+appPlugin:ota-client-policy,true
+
+appPlugin:ota-common,true
+
+appPlugin:ota-server,true
+
+appPlugin:ota-server-policy,true
+
+appPlugin:ota-storage-common,true
+
+appPlugin:ota-storage-posix-filesystem,false
+appPlugin:ota-storage-simple,false
+appPlugin:ota-storage-simple-eeprom,false
+appPlugin:ota-storage-simple-ram,false
+appPlugin:partner-link-key-exchange,true
+
+appPlugin:price-client,true
+
+appPlugin:price-server,true
+
+appPlugin:scenes,true
+
+appPlugin:scenes-client,false
+appPlugin:simple-metering-client,true
+
+appPlugin:simple-metering-server,true
+
+appPlugin:smart-energy-registration,true
+
+appPlugin:temperature-measurement,true
+
+appPlugin:test-harness,false
+appPlugin:thermostat,true
+
+appPlugin:time-client,true
+
+appPlugin:time-server,true
+
+appPlugin:trust-center-keepalive,false
+appPlugin:tunneling-client,true
+
+appPlugin:tunneling-server,true
+
